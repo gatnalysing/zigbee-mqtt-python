@@ -1,0 +1,53 @@
+tmux new-session -s zigbee2mqtt
+
+npm start --prefix /opt/zigbee2mqtt
+
+	(service should strart)
+
+	(ctrl-b, then d)
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+tmux new-session -s lavapy
+
+cd /home/gatnalysing/zigbee_projects/lavalamp
+
+source lavenv/bin/activate
+
+python lavalam.py
+
+	(service should strart)
+
+	(ctrl-b, then d)
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+tmux new-session -s monitor
+
+mosquitto_pub -h localhost -t zigbee2mqtt/MyLight/get -m '{}'
+
+mosquitto_sub -h localhost -t zigbee2mqtt/MyLight -v
+
+	(service should strart)
+	
+ctrl d (optional to stop service)
+
+	(ctrl-b, then d)
+
+
+
+--------------------------------------------------------------------------------
+
+
+	(tmux attach -t lavapy) <-- if you exit and need to re-enter
+
+	(tmux list-sessions) <-- also helpful if confused
+

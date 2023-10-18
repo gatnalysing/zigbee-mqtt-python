@@ -1,0 +1,29 @@
+perl: warning: Falling back to a fallback locale...
+--------------------------------------------------------------------------
+apt-listchanges: Can't set locale; make sure $LC_* and $LANG are correct!
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "is_IS.UTF-8",
+	LC_MONETARY = "is_IS.UTF-8",
+	LC_ADDRESS = "is_IS.UTF-8",
+	LC_TELEPHONE = "is_IS.UTF-8",
+	LC_NAME = "is_IS.UTF-8",
+	LC_MEASUREMENT = "is_IS.UTF-8",
+	LC_IDENTIFICATION = "is_IS.UTF-8",
+	LC_NUMERIC = "is_IS.UTF-8",
+	LC_PAPER = "is_IS.UTF-8",
+	LANG = "en_GB.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("en_GB.UTF-8").
+locale: Cannot set LC_ALL to default locale: No such file or directory
+--------------------------------------------------------------------------
+
+Solution:
+Regenerate the Locales by running:
+
+sudo dpkg-reconfigure locales
+
+You'll be presented with a list of locales. Make sure to select is_IS.UTF-8
+Then, on the next screen, choose the default locale for the system, is_IS.UTF-8

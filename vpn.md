@@ -37,13 +37,18 @@ Add the following content:
 ```plaintext
 [Interface]
 Address = 10.0.0.1/24
-PrivateKey = [Raspberry Pi's Private Key]
+PrivateKey = [Private Key]
 ListenPort = 51820
+
+# Replace [Private Key] with the actual private key you generated before
 
 # You will add the peer (VM and other RPi gateways) info here later
 ```
 
-Make sure to replace `[Raspberry Pi's Private Key]` with the actual private key you generated in step 3.
+In case you need to retrieve your private key again:
+```bash
+sudo cat /etc/wireguard/privatekey
+```
 
 ### 5. Activate WireGuard on the Raspberry Pi:
 

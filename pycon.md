@@ -94,10 +94,10 @@ The script also creates a CSV file with client details for easy reference.
    ```
 
    **eth0 Important note:** The code block above makes a lot of assumptions. For example eth0 might not be your uplink device
-<br/>
+
 2. **Script Setup**  
    Save the provided Python script in the repository as `wireguard_config_gen.py`.
-<br/>
+
 3. **Make the Script Executable**
 
    ```bash

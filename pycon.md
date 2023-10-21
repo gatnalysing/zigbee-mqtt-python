@@ -117,8 +117,4 @@ After execution, you should have:
 - A configuration file for each client named `clientX.conf` in the current directory (where `X` is the client number from 1 to 30).
 - A CSV file named `client_data.csv` with details about each client.
 
-Upload the CSV to Google Sheets or another spreadsheet application for easy reference and management.
-
-#### Note
-
-For security reasons, DO NOT upload private keys or configuration files containing private keys to public repositories or public locations.
+*The CSV is just intended as a way to easily manage vpn nodes*

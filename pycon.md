@@ -1,6 +1,3 @@
-Certainly! Here's a markdown file you can use:
-
----
 
 ### WireGuard VPN Configuration Generator
 
@@ -49,5 +46,4 @@ Upload the CSV to Google Sheets or another spreadsheet application for easy refe
 For security reasons, DO NOT upload private keys or configuration files containing private keys to public repositories or public locations.
 
 ---
-
-Simply copy and paste the above markdown content into a `.md` file (e.g., `README.md`) and push it to your GitHub repository. Make sure to replace `<your-repo-url>` and `<your-repo-directory>` with appropriate values.
+.md Created with the help of GPT

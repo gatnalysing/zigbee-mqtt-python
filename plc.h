@@ -1,24 +1,30 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 
-byte mac[] = {0xAB, 0xCD, 0xEF, 0x01, 0x23, 0x45}; 
-IPAddress ip(192, 168, 0, 201);  // Set the static IP address
-IPAddress broker(192, 168, 0, 66);  // IP address of your MQTT broker
+byte mac[] = {0xAB, 0xCD, 0xEF, 0x01, 0x23, 0x45};
+IPAddress ip(192, 168, 0, 201);
+IPAddress broker(192, 168, 0, 66);
 
 EthernetClient ethClient;
 PubSubClient mqttClient(ethClient);
 
-const int ledPin = LED_D0;  // Use the same LED pin from the previous program
+const int numRelays = 4;
+int relayPins[numRelays] = {D0, D1, D2, D3};
+int ledPins[numRelays] = {LED_D0, LED_D1, LED_D2, LED_D3};
 
 void setup() {
   Serial.begin(115200);
-  pinMode(ledPin, OUTPUT);
-
+  
+  for (int i = 0; i < numRelays; i++) {
+    pinMode(relayPins[i], OUTPUT);
+    pinMode(ledPins[i], OUTPUT);
+    digitalWrite(relayPins[i], LOW);
+    digitalWrite(ledPins[i], LOW);
+  }
+  
   Ethernet.begin(mac, ip);
-
   mqttClient.setServer(broker, 1883);
   mqttClient.setCallback(callback);
-
   connectToMQTT();
 }
 
@@ -27,7 +33,7 @@ void connectToMQTT() {
     Serial.println("Connecting to MQTT...");
     if (mqttClient.connect("OptaPLC")) {
       Serial.println("Connected to MQTT Broker!");
-      mqttClient.subscribe("LEDControl");
+      mqttClient.subscribe("RelayControl");
     } else {
       Serial.print("Failed to connect to MQTT, rc=");
       Serial.print(mqttClient.state());
@@ -48,10 +54,28 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println(message);
 
-  if (message == "ON") {
-    digitalWrite(ledPin, HIGH);
-  } else if (message == "OFF") {
-    digitalWrite(ledPin, LOW);
+  if (message.startsWith("ON")) {
+    int relayNum = message.substring(3).toInt();
+    if (relayNum > 0 && relayNum <= numRelays) {
+      digitalWrite(relayPins[relayNum - 1], HIGH);
+      digitalWrite(ledPins[relayNum - 1], HIGH);
+    } else if (relayNum == 0 || message.substring(3) == "A") {
+      for (int i = 0; i < numRelays; i++) {
+        digitalWrite(relayPins[i], HIGH);
+        digitalWrite(ledPins[i], HIGH);
+      }
+    }
+  } else if (message.startsWith("OFF")) {
+    int relayNum = message.substring(4).toInt();
+    if (relayNum > 0 && relayNum <= numRelays) {
+      digitalWrite(relayPins[relayNum - 1], LOW);
+      digitalWrite(ledPins[relayNum - 1], LOW);
+    } else if (relayNum == 0 || message.substring(4) == "A") {
+      for (int i = 0; i < numRelays; i++) {
+        digitalWrite(relayPins[i], LOW);
+        digitalWrite(ledPins[i], LOW);
+      }
+    }
   }
 }
 

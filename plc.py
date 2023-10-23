@@ -1,3 +1,5 @@
+__all__ = ["publish_message"]
+
 import paho.mqtt.client as mqtt
 import sys
 

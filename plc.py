@@ -16,22 +16,25 @@ def publish_message(message):
 
     client.loop_start()
     
-    result = client.publish("LEDControl", payload=message, qos=0, retain=False)
+    result = client.publish("RelayControl", payload=message, qos=0, retain=False)
     status = result.rc
     if status == 0:
-        print(f"Send `{message}` to topic `LEDControl`")
+        print(f"Send `{message}` to topic `RelayControl`")
     else:
-        print("Failed to send message to topic `LEDControl`")
+        print("Failed to send message to topic `RelayControl`")
     
     client.disconnect()
     client.loop_stop()
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        message = sys.argv[1].upper()
-        if message in ["ON", "OFF"]:
+    if len(sys.argv) > 2:
+        action = sys.argv[1].upper()
+        relay_num = sys.argv[2].upper()  # Convert to uppercase to handle 'A' or 'a'
+        
+        if action in ["ON", "OFF"] and (relay_num.isdigit() or relay_num == 'A'):
+            message = f"{action} {relay_num}"
             publish_message(message)
         else:
-            print("Invalid argument. Please enter ON or OFF.")
+            print("Invalid arguments. Please use ON/OFF and a relay number or 'A' for all.")
     else:
-        print("No argument provided. Please run the script with ON or OFF argument.")
+        print("Not enough arguments provided. Please run the script with ON/OFF and a relay number or 'A' for all.")

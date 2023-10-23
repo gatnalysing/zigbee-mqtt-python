@@ -1,37 +1,56 @@
+import sys
 import time
-import plc  # Import the plc module
+import plc
 
-def power_cycle():
+def power_cycle(relays):
     cycles = [
-        (5, 5),  # (off time, on time)
+        (5, 5),    # (off time, on time)
         (5, 5),
         (5, 5),
-        (5, 10),  # Flashing 10 seconds
+        (5, 10),   # Flashing 10 seconds
         (5, 5),
-        (5, None),  # Leave on after this cycle
+        (5, None), # Leave on after this cycle
     ]
     
-    total_steps = len(cycles) * 2
-    current_step = 0
-    
-    for i, (off_time, on_time) in enumerate(cycles, start=1):
-        current_step += 1
-        plc.publish_message("OFF")
-        print(f"Step {current_step}/{total_steps}: Power OFF - Cycle {i}")
+    for off_time, on_time in cycles:
+        # Turn specified relays OFF
+        for relay in relays:
+            plc.publish_message(f"OFF {relay}")
+            time.sleep(0.5)  # Delay between commands
+        
+        print("-", end="", flush=True)
         time.sleep(off_time)
         
-        current_step += 1
-        plc.publish_message("ON")
-        print(f"Step {current_step}/{total_steps}: Power ON - Cycle {i}")
+        # Turn specified relays ON
+        for relay in relays:
+            plc.publish_message(f"ON {relay}")
+            time.sleep(0.5)  # Delay between commands
+            
+        print("+", end="", flush=True)
         
         if on_time is not None:
             if on_time == 10:
-                print("Flashing Lights!")
+                print("F", end="", flush=True)  # Indicate flashing
             time.sleep(on_time)
         else:
-            print("Leaving lights ON")
-            print("Sequence complete!")
+            print("Done!", end="\n", flush=True)
             break
 
+def parse_args(args):
+    relays = set()
+    for arg in args:
+        if arg == 'a':
+            relays.update({1, 2, 3, 4})
+        else:
+            relays.update({int(digit) for digit in arg if digit.isdigit() and 1 <= int(digit) <= 4})
+    return list(relays)
+
 if __name__ == "__main__":
-    power_cycle()
+    if len(sys.argv) > 1:
+        relays = parse_args(sys.argv[1:])
+        if not relays:
+            print("Invalid input. Please provide relay numbers (1-4) or 'a' for all relays.")
+        else:
+            power_cycle(relays)
+    else:
+        print("No arguments provided. Please run the script with relay numbers (1-4) or 'a' for all relays.")

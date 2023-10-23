@@ -50,3 +50,7 @@ mosquitto_sub -h localhost -t zigbee2mqtt/MyLight -v
   tmux list-sessions
   ```
 
+- Create new venv for python:
+  ```bash
+  python3 -m venv XnamehereX
+  ```

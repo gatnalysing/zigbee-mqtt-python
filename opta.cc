@@ -1,82 +1,99 @@
-const int buttonPin = BTN_USER; // "USER" button
-const int relayPin = D0;
-const int ledPin = LED_D0;
+#include <Ethernet.h>
+#include <PubSubClient.h>
 
-bool isButtonHeld = false;
-unsigned long buttonPressedTime = 0;
-bool flashing = false;
+byte mac[] = {0xAB, 0xCD, 0xEF, 0x01, 0x23, 0x45};
+IPAddress ip(192, 168, 0, 201);
+IPAddress broker(192, 168, 0, 66);
+
+EthernetClient ethClient;
+PubSubClient mqttClient(ethClient);
+
+const int numRelays = 4;
+int relayPins[numRelays] = {D0, D1, D2, D3};
+int ledPins[numRelays] = {LED_D0, LED_D1, LED_D2, LED_D3};
 
 void setup() {
-  pinMode(relayPin, OUTPUT);
-  pinMode(ledPin, OUTPUT);
-  pinMode(buttonPin, INPUT_PULLUP); // BTN_USER is active LOW
-  digitalWrite(ledPin, HIGH);
-  delay(1000);
+  Serial.begin(115200);
+  
+  for (int i = 0; i < numRelays; i++) {
+    pinMode(relayPins[i], OUTPUT);
+    pinMode(ledPins[i], OUTPUT);
+    digitalWrite(relayPins[i], LOW);
+    digitalWrite(ledPins[i], LOW);
+  }
+  
+  Ethernet.begin(mac, ip);
+  mqttClient.setServer(broker, 1883);
+  mqttClient.setCallback(callback);
+  connectToMQTT();
 }
 
-bool state_change() {
-  digitalWrite(relayPin, LOW);
-  if (flashingDelay(5000)) return true;
-  digitalWrite(relayPin, HIGH);
-  if (flashingDelay(5000)) return true;
-  return false;
-}
-
-bool flashingDelay(unsigned long duration) {
+void connectToMQTT() {
   unsigned long startTime = millis();
-  while (millis() - startTime < duration) {
-    if (flashing) {
-      if ((millis() / 250) % 2 == 0) {
-        digitalWrite(ledPin, HIGH);
+  int connectionAttempts = 0;
+  
+  while (!mqttClient.connected()) {
+    if (millis() - startTime > 5000) {
+      Serial.println("Connecting to MQTT...");
+      if (mqttClient.connect("OptaPLC")) {
+        Serial.println("Connected to MQTT Broker!");
+        mqttClient.subscribe("RelayControl");
       } else {
-        digitalWrite(ledPin, LOW);
+        Serial.print("Failed to connect to MQTT, rc=");
+        Serial.print(mqttClient.state());
+        Serial.println(" Trying again in 5 seconds");
+        connectionAttempts++;
+        if (connectionAttempts > 5) {
+          Serial.println("Too many failed attempts, attempting to reset Ethernet and MQTT...");
+          Ethernet.begin(mac, ip);
+          mqttClient.setServer(broker, 1883);
+          connectionAttempts = 0; // Reset the counter after attempting to reinitialize
+        }
+      }
+      startTime = millis(); // Reset the timer
+    }
+  }
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message received [");
+  Serial.print(topic);
+  Serial.print("] ");
+
+  String message;
+  for (int i = 0; i < length; i++) {
+    message += (char)payload[i];
+  }
+  Serial.println(message);
+
+  if (message.startsWith("ON")) {
+    int relayNum = message.substring(3).toInt();
+    if (relayNum > 0 && relayNum <= numRelays) {
+      digitalWrite(relayPins[relayNum - 1], HIGH);
+      digitalWrite(ledPins[relayNum - 1], HIGH);
+    } else if (relayNum == 0 || message.substring(3) == "A") {
+      for (int i = 0; i < numRelays; i++) {
+        digitalWrite(relayPins[i], HIGH);
+        digitalWrite(ledPins[i], HIGH);
       }
     }
-    if (digitalRead(buttonPin) == LOW) { // Button is pressed
-      return true; // Interrupted
+  } else if (message.startsWith("OFF")) {
+    int relayNum = message.substring(4).toInt();
+    if (relayNum > 0 && relayNum <= numRelays) {
+      digitalWrite(relayPins[relayNum - 1], LOW);
+      digitalWrite(ledPins[relayNum - 1], LOW);
+    } else if (relayNum == 0 || message.substring(4) == "A") {
+      for (int i = 0; i < numRelays; i++) {
+        digitalWrite(relayPins[i], LOW);
+        digitalWrite(ledPins[i], LOW);
+      }
     }
-    delay(1); // Short delay to avoid blocking
   }
-  return false; // Completed without interruption
 }
 
 void loop() {
-  int button_state = digitalRead(buttonPin);
-  if (button_state == LOW) { // Button is pressed
-    if (!isButtonHeld) {
-      buttonPressedTime = millis();
-      isButtonHeld = true;
-    }
-    unsigned long currentTime = millis();
-    if (currentTime - buttonPressedTime >= 10000) {
-      flashing = true; // Start flashing when button is held for 10 seconds
-    }
-    if (currentTime - buttonPressedTime > 20000) {
-      isButtonHeld = false; // Reset if held for more than 20 seconds
-      flashing = false; // Stop flashing
-      digitalWrite(ledPin, HIGH);
-    }
-  } else { // Button is not pressed
-    if (isButtonHeld) {
-      unsigned long buttonReleasedTime = millis();
-      if (buttonReleasedTime - buttonPressedTime >= 10000 && buttonReleasedTime - buttonPressedTime <= 20000) {
-        if (state_change()) return;
-        if (state_change()) return;
-        if (state_change()) return;
-        if (state_change()) return;
-        flashingDelay(5000);
-        state_change();
-        digitalWrite(relayPin, LOW);
-        delay(5000);
-        digitalWrite(relayPin, HIGH);
-        flashing = false; // Stop flashing after power cycling is completed
-      }
-      isButtonHeld = false; // Reset button hold state
-    }
-    if (!flashing) {
-      digitalWrite(ledPin, HIGH);
-      digitalWrite(relayPin, HIGH);
-      delay(1000);
-    }
+  if (!mqttClient.connected()) {
+    connectToMQTT();
   }
+  mqttClient.loop();
 }

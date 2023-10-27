@@ -1,7 +1,7 @@
 # Comprehensive Zigbee2MQTT and Mosquitto Setup Tutorial
 
 ## Prerequisites
-- Raspberry Pi (or another Linux-based system)
+- Raspberry Pi or another Linux-based system
 - Zigbee adapter (e.g., CC2531, ConBee II)
 - Zigbee device (for testing)
 - User with sudo privileges
@@ -35,12 +35,18 @@ npm ci --production
 ```
 
 ## Step 5: Configure Zigbee2MQTT
-Create a configuration file and update it according to your hardware setup.
-```bash
-cp data/configuration.yaml.sample data/configuration.yaml
-nano data/configuration.yaml
-```
-Ensure the `serial` section matches your Zigbee adapter's settings.
+1. Create a configuration file and update it according to your hardware setup.
+    ```bash
+    cp data/configuration.yaml.sample data/configuration.yaml
+    nano data/configuration.yaml
+    ```
+   Ensure the `serial` section matches your Zigbee adapter's settings.
+   
+2. Find and verify the USB device designation for your Zigbee adapter:
+    ```bash
+    dmesg | grep tty
+    ```
+   Look for output that identifies your Zigbee adapter and note the `tty` designation (e.g., `ttyACM0`).
 
 ## Step 6: Install Mosquitto MQTT Broker
 Install Mosquitto and its client package.
@@ -128,4 +134,4 @@ sudo systemctl restart zigbee2mqtt
 
 ---
 
-This guide covers the entire process, from system update to device pairing, including setting up Systemd services for easy management of Zigbee2MQTT and Mosquitto MQTT Broker. Ensure that you replace placeholders like `YOUR_USERNAME`, `your_device_ieee_address`, and `your_friendly_name` with the appropriate values for your setup.
+This guide covers the entire process, from system update to device pairing, including setting up Systemd services for easy management of Zigbee2MQTT and Mosquitto MQTT Broker. Ensure that you replace placeholders like `YOUR_USERNAME`, `your_device_ieee_address`, and `your_friendly_name` with the appropriate values for your setup. Additionally, ensure your MQTT broker is secure and only accessible to authorized users.

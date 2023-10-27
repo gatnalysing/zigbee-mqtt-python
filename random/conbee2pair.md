@@ -1,82 +1,92 @@
-### Step 1: Insert ConBee II USB Adapter
+### Step 1: Change Directory
 
-1. **Plug in the ConBee II USB Adapter:**
-   ```plaintext
-   Insert the ConBee II USB adapter into an available USB port on the Raspberry Pi.
-   ```
+Navigate to your Zigbee2MQTT installation directory:
 
----
+```sh
+cd /home/gatnalysing/zigbee2mqtt
+```
 
-### Step 2: Install deCONZ (Optional)
+### Step 2: Ensure Permissions are Correct
 
-*deCONZ is a software that provides a graphical interface for Zigbee networks, and it supports ConBee. If you prefer to use deCONZ alongside Zigbee2MQTT, follow these steps. If not, skip to Step 3.*
+Make sure that the current user owns the Zigbee2MQTT directory:
 
-2. **Install deCONZ:**
-   ```sh
-   sudo apt update
-   sudo apt install -y deconz
-   ```
+```sh
+sudo chown -R $USER:$USER /home/gatnalysing/zigbee2mqtt/
+```
 
-3. **Enable and Start deCONZ Service:**
-   ```sh
-   sudo systemctl enable deconz
-   sudo systemctl start deconz
-   ```
+### Step 3: Create Data Directory (If Needed)
 
-   Access the deCONZ web interface on the default port 80.
+If the `data` directory does not exist within the Zigbee2MQTT directory, create it:
 
----
+```sh
+mkdir -p /home/gatnalysing/zigbee2mqtt/data
+```
 
-### Step 3: Configure Zigbee2MQTT for ConBee II
+### Step 4: Create/Edit Configuration File
 
-4. **Edit Zigbee2MQTT Configuration File:**
-   ```sh
-   sudo nano /opt/zigbee2mqtt/data/configuration.yaml
-   ```
+Create or edit the configuration file:
 
-   Add or modify the following lines to set the serial port for ConBee II (replace `/dev/ttyACM0` with your actual device path if different):
-   ```yaml
-   serial:
-     port: /dev/ttyACM0
-   ```
+```sh
+nano /home/gatnalysing/zigbee2mqtt/data/configuration.yaml
+```
 
-5. **Restart Zigbee2MQTT:**
-   ```sh
-   sudo systemctl restart zigbee2mqtt
-   ```
+Add your configuration settings. For example:
 
----
+```yaml
+homeassistant: false
+permit_join: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://localhost'
+serial:
+  port: /dev/ttyACM0  # Update with your actual device path
+```
 
-### Step 4: Pair the Test Lamp
+### Step 5: Update Zigbee2MQTT Service File (If Needed)
 
-6. **Enable Pairing Mode in Zigbee2MQTT:**
-   - Publish a message to enable pairing:
-     ```sh
-     mosquitto_pub -h 10.0.0.101 -t 'zigbee2mqtt/bridge/request/permit_join' -m '{"value":true}'
-     ```
+If you have created a systemd service file to run Zigbee2MQTT, make sure it points to the correct directory. Edit the service file:
 
-7. **Reset Your Lamp and Wait for It to Pair:**
-   - Follow the manufacturer’s instructions to reset the lamp and put it in pairing mode.
-   - Monitor Zigbee2MQTT logs:
-     ```sh
-     sudo journalctl -u zigbee2mqtt -f
-     ```
+```sh
+sudo nano /etc/systemd/system/zigbee2mqtt.service
+```
 
----
+Ensure the `WorkingDirectory` is set to `/home/gatnalysing/zigbee2mqtt`.
 
-### Step 5: Test the Lamp
+Example:
 
-8. **Send a Test Command to the Lamp:**
-   - Change the lamp's color:
-     ```sh
-     mosquitto_pub -h 10.0.0.101 -t 'zigbee2mqtt/MyLight/set' -m '{"color": {"x": 0.701, "y": 0.299}}'
-     ```
+```ini
+[Unit]
+Description=zigbee2mqtt
+After=network.target
 
-   - Replace `MyLight` with the lamp’s friendly name.
+[Service]
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/home/gatnalysing/zigbee2mqtt
+User=gatnalysing
+Restart=on-failure
 
----
+[Install]
+WantedBy=multi-user.target
+```
 
-### Step 6: Ensure Backward Compatibility
+Reload the systemd manager configuration:
 
-9. **Check and Update Existing Script:**
-   - Make sure the script points to the correct IP and topic.
+```sh
+sudo systemctl daemon-reload
+```
+
+### Step 6: Restart Zigbee2MQTT
+
+Restart Zigbee2MQTT to apply the changes:
+
+```sh
+sudo systemctl restart zigbee2mqtt
+```
+
+Check the status to ensure it is running correctly:
+
+```sh
+sudo systemctl status zigbee2mqtt
+```
+
+You should now be able to proceed with configuring Zigbee2MQTT for your ConBee II USB adapter and pairing your devices.

@@ -111,6 +111,8 @@ mosquitto_pub -h localhost -t test -m "Hello"
    sudo journalctl -u zigbee2mqtt -f
    ```
 
+![Reset Sequence for Lamp](https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/random/image.png)
+
 ## Step 12: Set Friendly Name for Zigbee Device (Optional)
 Edit Zigbee2MQTT configuration to add a friendly name for your device.
 ```bash

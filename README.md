@@ -170,34 +170,126 @@ sudo service mosquitto restart
 
 ## [Zigbee2MQTT Setup](https://www.zigbee2mqtt.io/guide/installation/01_linux.html "zigbee2mqtt.io guide")
 (https://www.zigbee2mqtt.io/guide/installation/01_linux.html)
+
+### Determine Adapter Location
+
+First, check the location of your Zigbee adapter:
+
+```bash
+ls -l /dev/ttyACM0
+```
+
+Or if you have multiple adapters, find the specific one by ID:
+
+```bash
+ls -l /dev/serial/by-id
+```
+
 ### Installation
 
-Update the package list and install dependencies:
+Install Node.js and other dependencies:
 
-```
-sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
-```
-
-Add the NodeSource repository to your system:
-
-```
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-sudo apt-get update && sudo apt-get install nodejs -y
+```bash
+sudo curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt-get install -y nodejs git make g++ gcc
 ```
 
-Verify Node.js installation:
+Verify the installation:
 
-```
+```bash
 node --version
 npm --version
 ```
 
-Clone the Zigbee2MQTT repository and install it:
+Create a directory for Zigbee2MQTT and change its ownership to the current user:
 
-```
+```bash
 sudo mkdir /opt/zigbee2mqtt
-sudo chown -R ${USER}: /opt/zigbee2mqtt
-git clone --depth 1 https://github.com/Koenkk/zigbee
+sudo chown -R $USER: /opt/zigbee2mqtt
 ```
+
+Clone the Zigbee2MQTT repository:
+
+```bash
+git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
+cd /opt/zigbee2mqtt
+```
+
+Install the required packages:
+
+```bash
+npm ci
+```
+
+Build Zigbee2MQTT:
+
+```bash
+npm run build
+```
+
+### Configuring Zigbee2MQTT
+
+Copy the example configuration file and edit it as needed:
+
+```bash
+cp /opt/zigbee2mqtt/data/configuration.example.yaml /opt/zigbee2mqtt/data/configuration.yaml
+nano /opt/zigbee2mqtt/data/configuration.yaml
+```
+
+### Running Zigbee2MQTT
+
+To start Zigbee2MQTT:
+
+```bash
+cd /opt/zigbee2mqtt
+npm start
+```
+
+### Running as a Daemon with systemctl
+
+Create a new service file for Zigbee2MQTT:
+
+```bash
+sudo nano /etc/systemd/system/zigbee2mqtt.service
+```
+
+*Add the following content to the `zigbee2mqtt.service` file:*
+
+```ini
+[Unit]
+Description=Zigbee2MQTT
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/opt/zigbee2mqtt
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start the Zigbee2MQTT service:
+
+```bash
+sudo systemctl enable zigbee2mqtt
+sudo systemctl start zigbee2mqtt
+```
+
+Check the status of the service:
+
+```bash
+systemctl status zigbee2mqtt.service
+```
+
+**Note:** Replace `User=pi` with the appropriate username if you are not using the default 'pi' user.
+
+
+Please ensure that the username and paths are correct for your specific setup, and adjust the Node.js version in the curl command if needed.
+
+
+
 [Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)

@@ -21,6 +21,8 @@ Set locales: UK, IS.
 Enable SSH.
 Change hostname
 
+[Back to top](#Raspberry Pi Recepie - zigbee2MQTT flavour)
+
 ## [WireGuard VPN](https://wireguard.how/client/raspberry-pi-os/ "wireguard.how...")
 (https://wireguard.how/client/raspberry-pi-os/)
 ### Installation

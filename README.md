@@ -144,6 +144,27 @@ View the default configuration file:
 ```
 cat /etc/mosquitto/mosquitto.conf
 ```
+
+For testing it can be useful to open access by uncommenting:
+```
+pid_file /run/mosquitto/mosquitto.pid
+
+persistence true
+persistence_location /var/lib/mosquitto/
+
+log_dest file /var/log/mosquitto/mosquitto.log
+
+include_dir /etc/mosquitto/conf.d
+
+listener 1883
+#allow_anonymous true
+```
+Remember to comment again and restart after changes:
+
+```
+sudo service mosquitto restart
+```
+
 [Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)
 
 

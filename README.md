@@ -21,7 +21,6 @@ Set locales: UK, IS.
 Enable SSH.
 Change hostname
 
-[Back to top](#raspberry-pi-recepie---zigbee2mqtt-flavour)
 
 ## [WireGuard VPN](https://wireguard.how/client/raspberry-pi-os/ "wireguard.how...")
 (https://wireguard.how/client/raspberry-pi-os/)
@@ -74,6 +73,7 @@ Set WireGuard to start on boot:
 sudo systemctl enable wg-quick@wg0
 sudo systemctl restart wg-quick@wg0
 ```
+[Back to top](#raspberry-pi-recepie---zigbee2mqtt-flavour)
 
 ### Server Configuration
 
@@ -112,6 +112,8 @@ After making changes to the configuration, a reboot is recommended:
 ```
 sudo reboot
 ```
+[Back to top](#raspberry-pi-recepie---zigbee2mqtt-flavour)
+
 
 ## Mosquitto MQTT Broker
 
@@ -143,6 +145,8 @@ View the default configuration file:
 ```
 cat /etc/mosquitto/mosquitto.conf
 ```
+[Back to top](#raspberry-pi-recepie---zigbee2mqtt-flavour)
+
 
 ## [Zigbee2MQTT Setup](https://www.zigbee2mqtt.io/guide/installation/01_linux.html "zigbee2mqtt.io guide")
 (https://www.zigbee2mqtt.io/guide/installation/01_linux.html)
@@ -175,3 +179,5 @@ Clone the Zigbee2MQTT repository and install it:
 sudo mkdir /opt/zigbee2mqtt
 sudo chown -R ${USER}: /opt/zigbee2mqtt
 git clone --depth 1 https://github.com/Koenkk/zigbee
+```
+[Back to top](#raspberry-pi-recepie---zigbee2mqtt-flavour)

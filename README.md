@@ -1,7 +1,6 @@
 
+# Raspberry Pi Recipe - zigbee2MQTT flavour
 
-
-# Raspberry Pi Recepie - zigbee2MQTT flavour
 
 
 1. [Initial Raspberry Pi OS Setup](#initial-raspberry-pi-os-setup)

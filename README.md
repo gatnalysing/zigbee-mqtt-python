@@ -271,6 +271,7 @@ User=pi
 [Install]
 WantedBy=multi-user.target
 ```
+**Note:** Replace `User=pi` with the appropriate username if you are not using the default 'pi' user.
 
 Enable and start the Zigbee2MQTT service:
 
@@ -284,11 +285,6 @@ Check the status of the service:
 ```bash
 systemctl status zigbee2mqtt.service
 ```
-
-**Note:** Replace `User=pi` with the appropriate username if you are not using the default 'pi' user.
-
-
-Please ensure that the username and paths are correct for your specific setup, and adjust the Node.js version in the curl command if needed.
 
 
 

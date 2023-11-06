@@ -14,8 +14,14 @@
 
 - Network install onto SSD: Boot and hold `Shift`.
 - Configure system:
-  ```bash
+  ```
+  sudo passwd
+  ```
+  
+  ```
   sudo raspi-config
+  ```
+
 Set locales: UK, IS.
 Enable SSH.
 Change hostname

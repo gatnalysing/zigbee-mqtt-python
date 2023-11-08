@@ -31,92 +31,55 @@ Change hostname
 (https://wireguard.how/client/raspberry-pi-os/)
 ### Installation
 
-Install WireGuard:
+   - Install WireGuard:
 
-```
-sudo apt install wireguard
-```
-
+      ```
+      sudo apt install wireguard
+      ```
+   - Install `resolvconf`:
+      ```
+      sudo apt-get install resolvconf
+      ```
+      _(I'm unsure why this step is needed)_
+     
 ### Client Configuration
 
-Edit the WireGuard client configuration:
+   - Edit the WireGuard client configuration:
 
-```bash
-sudo nano /etc/wireguard/wg0.conf
-```
+      ```
+      sudo nano /etc/wireguard/wg0.conf
+      ```
 
-Your `wg0.conf` should resemble the following:
-
-```ini
-[Interface]
-Address = 10.0.0.103/24
-PrivateKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
-DNS = 8.8.8.8
-
-[Peer]
-PublicKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
-Endpoint = XXX.XXX.XXX.XX:XXXXX
-AllowedIPs = 0.0.0.0/0
-PersistentKeepalive = 25
-```
-
-If needed, install `resolvconf`:
-
-```
-sudo apt-get install resolvconf
-```
-
-You might need to reboot for the changes to take effect:
-
-```
-sudo reboot
-```
-
-Set WireGuard to start on boot:
-
-```
-sudo systemctl enable wg-quick@wg0
-sudo systemctl restart wg-quick@wg0
-```
-[Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)
+      ```ini
+      [Interface]
+      Address = X.X.X.X/24
+      PrivateKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+      DNS = X.X.X.X #resolved some issues for me
+      
+      [Peer]
+      PublicKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+      Endpoint = [real IP of your server]:[port]
+      AllowedIPs = 0.0.0.0/0 # Restric as needed
+      PersistentKeepalive = 25 #resolved some issues for me
+      ```
+   - Set WireGuard to start on boot:
+      
+      ```
+      sudo systemctl enable wg-quick@wg0
+      sudo systemctl restart wg-quick@wg0
+      ```
 
 ### Server Configuration
 
-Edit the WireGuard server configuration:
+   - Edit the WireGuard server configuration
 
-```
-sudo nano /etc/wireguard/wg0.conf
-```
+      ```
+      sudo nano /etc/wireguard/wg0.conf
+      ```
 
-Add your client to the list of `Peers`:
+   - Add the new client to your list of peers in the `wg0.conf` server file
+   - Apply the new configuration
 
-```ini
-[Interface]
-Address = 10.0.0.1/32
-ListenPort = 51820
-PrivateKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
-PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o enp0s25 -j MASQUERADE
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o enp0s25 -j MASQUERADE
-
-[Peer]
-# client1
-PublicKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
-AllowedIPs = 10.0.0.x/32
-
-# Additional peers can be added similarly
-```
-
-Apply the configuration:
-
-```
-sudo wg syncconf wg0 <(sudo wg-quick strip wg0)
-```
-
-After making changes to the configuration, a reboot is recommended:
-
-```
-sudo reboot
-```
 [Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)
 
 
@@ -138,20 +101,12 @@ Enable and start the Mosquitto service:
 sudo systemctl enable mosquitto
 sudo systemctl start mosquitto
 ```
-
-Check the service status:
-
-```
-sudo systemctl status mosquitto
-```
-
-View the default configuration file:
+Configuration file:
 
 ```
-cat /etc/mosquitto/mosquitto.conf
+sudo nano /etc/mosquitto/mosquitto.conf
 ```
 
-For testing it can be useful to open access by uncommenting:
 ```
 pid_file /run/mosquitto/mosquitto.pid
 
@@ -162,13 +117,16 @@ log_dest file /var/log/mosquitto/mosquitto.log
 
 include_dir /etc/mosquitto/conf.d
 
+#add these lines:
 listener 1883
-#allow_anonymous true
+allow_anonymous true
 ```
-Remember to comment again and restart after changes:
+_IMO it's best to restrict access at the fw instead of here_
+
 
 ```
 sudo service mosquitto restart
+# for mosquitto.conf changes to take effect
 ```
 
 [Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)
@@ -183,9 +141,10 @@ First, check the location of your Zigbee adapter:
 
 ```bash
 ls -l /dev/ttyACM0
+# or /dev/ttyACM1
 ```
 
-Or if you have multiple adapters, find the specific one by ID:
+If you have multiple adapters, find the specific one by ID:
 
 ```bash
 ls -l /dev/serial/by-id
@@ -193,16 +152,22 @@ ls -l /dev/serial/by-id
 
 ### Installation
 
-Install Node.js and other dependencies:
+Install Node.js and dependencies:
 
-```bash
+```
 sudo curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-sudo apt-get install -y nodejs git make g++ gcc
 ```
 
-Verify the installation:
+```
+sudo apt-get install -y nodejs git make g++ gcc
+```
+```
+sudo apt-get install -y npm
+```
 
-```bash
+Verify the installations:
+
+```
 node --version
 npm --version
 ```
@@ -235,21 +200,23 @@ npm run build
 
 ### Configuring Zigbee2MQTT
 
-Copy the example configuration file and edit it as needed:
+Backup configuration file and edit if needed:
 
 ```bash
 cp /opt/zigbee2mqtt/data/configuration.example.yaml /opt/zigbee2mqtt/data/configuration.yaml
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
+_Pay attention to `/dev/ttyACM0` here. If it's correct you can leave it alone._
 
 ### Running Zigbee2MQTT
 
-To start Zigbee2MQTT:
+To start Zigbee2MQTT for the first time and let it coomplete the initial build
 
 ```bash
 cd /opt/zigbee2mqtt
 npm start
 ```
+Once it's up and running with a `Zigbee2MQTT started!` message, press `Ctrl`+`C` and wait for it to exit gracefully with a `Stopped Zigbee2MQTT` message at the end.
 
 ### Running as a Daemon with systemctl
 

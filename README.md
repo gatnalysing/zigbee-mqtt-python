@@ -54,13 +54,13 @@ Change hostname
       [Interface]
       Address = X.X.X.X/24
       PrivateKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
-      DNS = X.X.X.X #resolved some issues for me
+      DNS = X.X.X.X # This resolved issues for me
       
       [Peer]
       PublicKey = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
-      Endpoint = [real IP of your server]:[port]
-      AllowedIPs = 0.0.0.0/0 # Restric as needed
-      PersistentKeepalive = 25 #resolved some issues for me
+      Endpoint = # 123.0.0.123:123 # Use IP of your VPN server and port
+      AllowedIPs = 0.0.0.0/0 # This is open, restric yours as needed
+      PersistentKeepalive = 25 # This resolved issues for me
       ```
    - Set WireGuard to start on boot:
       

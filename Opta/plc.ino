@@ -6,7 +6,7 @@ SerialRelayControl relayController(optaIO);
 
 void setup() {
   optaIO.setupPins();
-  relayController.begin(9600);
+  relayController.begin(115200);
 }
 
 void loop() {

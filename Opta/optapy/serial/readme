@@ -1,0 +1,11 @@
+source optavenv/bin/activate
+
+
+# Install Virtual Environment (if not installed)
+sudo apt-get install python3-venv
+
+# Create a New Virtual Environment
+python3 -m venv venv_name  # replace venv_name with your desired environment name
+
+# Activate the Virtual Environment
+source venv_name/bin/activate

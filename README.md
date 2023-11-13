@@ -151,7 +151,7 @@ sudo apt-get install -y nodejs
 ```
 
 ```
-sudo apt-get install -y nodejs git make g++ gcc
+sudo apt-get install -y git make g++ gcc
 ```
 ```
 sudo apt-get install -y npm

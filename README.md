@@ -153,9 +153,6 @@ sudo apt-get install -y nodejs
 ```
 sudo apt-get install -y git make g++ gcc
 ```
-```
-sudo apt-get install -y npm
-```
 
 Verify the installations:
 

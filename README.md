@@ -22,10 +22,10 @@
   sudo raspi-config
   ```
 
-Set locales: UK, IS.
-Enable SSH.
-Change hostname
-
+- Set locales: UK, IS.
+- Enable SSH.
+- Change hostname
+- apt update / upgrade
 
 ## [WireGuard VPN](https://wireguard.how/client/raspberry-pi-os/ "wireguard.how...")
 (https://wireguard.how/client/raspberry-pi-os/)

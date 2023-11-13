@@ -135,21 +135,6 @@ sudo service mosquitto restart
 ## [Zigbee2MQTT Setup](https://www.zigbee2mqtt.io/guide/installation/01_linux.html "zigbee2mqtt.io guide")
 (https://www.zigbee2mqtt.io/guide/installation/01_linux.html)
 
-### Determine Adapter Location
-
-First, check the location of your Zigbee adapter:
-
-```bash
-ls -l /dev/ttyACM0
-# or /dev/ttyACM1
-```
-
-If you have multiple adapters, find the specific one by ID:
-
-```bash
-ls -l /dev/serial/by-id
-```
-
 ### Installation
 
 Install Node.js and dependencies:
@@ -197,16 +182,6 @@ Build Zigbee2MQTT:
 ```bash
 npm run build
 ```
-
-### Configuring Zigbee2MQTT
-
-Backup configuration file and edit if needed:
-
-```bash
-cp /opt/zigbee2mqtt/data/configuration.example.yaml /opt/zigbee2mqtt/data/configuration.yaml
-nano /opt/zigbee2mqtt/data/configuration.yaml
-```
-_Pay attention to `/dev/ttyACM0` here. If it's correct you can leave it alone._
 
 ### Running Zigbee2MQTT
 

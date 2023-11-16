@@ -41,7 +41,10 @@ Peripherals:
        - (A1) Expand Filesystem
        - (A5) Update Bootloader
      - 'Esc' -> 'Finish' & reboot
-  8. Done!
+  8. System configuration complete
      ```
      sudo shutdown now
      ```
+  9. Software Installation:
+      - "ssh"
+      - 

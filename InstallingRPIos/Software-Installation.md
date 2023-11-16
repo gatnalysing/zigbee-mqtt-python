@@ -122,16 +122,7 @@ sudo apt-get update
 sudo apt-get install -y nodejs
 ```
 ```
-sudo apt-get install git
-```
-```
-sudo apt-get install make
-```
-```
-sudo apt-get install g++
-```
-```
-sudo apt-get install gcc
+sudo apt-get install -y git
 ```
 Verify the installations:
 
@@ -142,39 +133,39 @@ npm --version
 
 Create a directory for Zigbee2MQTT and change its ownership to the current user:
 
-```bash
+```
 sudo mkdir /opt/zigbee2mqtt
+```
+```
 sudo chown -R $USER: /opt/zigbee2mqtt
 ```
 
 Clone the Zigbee2MQTT repository:
 
-```bash
+```
 git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
+```
+```
 cd /opt/zigbee2mqtt
 ```
 
 Install the required packages:
-
-```bash
+```
 npm ci
 ```
 
 Build Zigbee2MQTT:
-
-```bash
+```
 npm run build
 ```
 
 ### Running Zigbee2MQTT
 
-To start Zigbee2MQTT for the first time and let it coomplete the initial build
-
-```bash
-cd /opt/zigbee2mqtt
+To start Zigbee2MQTT for the first time and let it coomplete the initial build:
+```
 npm start
 ```
-Once it's up and running with a `Zigbee2MQTT started!` message, press `Ctrl`+`C` and wait for it to exit gracefully with a `Stopped Zigbee2MQTT` message at the end.
+After "`Zigbee2MQTT started!`" message, exit gracefully with `Ctrl`+`C` ("`Stopped Zigbee2MQTT`")
 
 ### Running as a Daemon with systemctl
 
@@ -197,26 +188,24 @@ WorkingDirectory=/opt/zigbee2mqtt
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-User=pi
+User=user
 
 [Install]
 WantedBy=multi-user.target
 ```
-**Note:** Replace `User=pi` with the appropriate username if you are not using the default 'pi' user.
+**Note:** Replace `User=user` with the appropriate username
 
 Enable and start the Zigbee2MQTT service:
-
-```bash
+```
 sudo systemctl enable zigbee2mqtt
+```
+```
 sudo systemctl start zigbee2mqtt
 ```
 
 Check the status of the service:
-
-```bash
+```
 systemctl status zigbee2mqtt.service
 ```
-
-
 
 [Back to top](#zigbee-gateway---initial-software-installation)

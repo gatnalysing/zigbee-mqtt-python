@@ -49,52 +49,42 @@
      ping 10.0.0.1
      ```
 
-[Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)
+[Back to top](#zigbee-gateway---initial-software-installation)
+
 
 ## Mosquitto MQTT Broker
 
 ### Installation
 
-Install Mosquitto and its client tools:
-
+- Install Mosquitto and its client tools:
 ```
 sudo apt install -y mosquitto mosquitto-clients
 ```
 
 ### Service Management
 
-Enable and start the Mosquitto service:
-
+- Enable and start the Mosquitto service:
 ```
 sudo systemctl enable mosquitto
+```
+```
 sudo systemctl start mosquitto
 ```
-Configuration file:
 
+- Configuration file:
 ```
 sudo nano /etc/mosquitto/mosquitto.conf
 ```
 
+- Add following lines at the end of file to manage access at fw:
 ```
-pid_file /run/mosquitto/mosquitto.pid
-
-persistence true
-persistence_location /var/lib/mosquitto/
-
-log_dest file /var/log/mosquitto/mosquitto.log
-
-include_dir /etc/mosquitto/conf.d
-
-#add these lines:
 listener 1883
 allow_anonymous true
 ```
-_IMO it's best to restrict access at the fw instead of here_
 
-
+- Restart service for configurations to take:
 ```
 sudo service mosquitto restart
-# for mosquitto.conf changes to take effect
 ```
 
 [Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)

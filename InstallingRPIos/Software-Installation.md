@@ -1,5 +1,5 @@
 
-# Raspberry Pi Recipe - zigbee2MQTT flavour
+# Zigbee Gateway - Initial Software Installation
 
 1. [WireGuard VPN](#wireguard-vpn)
 2. [Mosquitto MQTT Broker](#mosquitto-mqtt-broker)
@@ -14,21 +14,6 @@
       ```
       sudo apt install wireguard
       ```
-     
-### Client Configuration
-
-   - Edit the WireGuard client configuration:
-
-      ```
-      sudo nano /etc/wireguard/wg0.conf
-      ```
-   - Set WireGuard to start on boot:
-      
-      ```
-      sudo systemctl enable wg-quick@wg0
-      sudo systemctl restart wg-quick@wg0
-      ```
-
 ### Server Configuration
 
    - Edit the WireGuard server configuration
@@ -39,6 +24,26 @@
 
    - Add the new client to your list of peers in the `wg0.conf` server file
    - Apply the new configuration
+     
+### Client Configuration
+
+   - Edit the WireGuard client configuration:
+
+      ```
+      sudo nano /etc/wireguard/wg0.conf
+      ```
+   - Install `resolvconf`:
+      ```
+      sudo apt-get install resolvconf
+      ```
+   - Set WireGuard to start on boot:
+      ```
+      sudo systemctl enable wg-quick@wg0
+      ```
+   - Restart service:
+      ```
+      sudo systemctl restart wg-quick@wg0
+      ```
 
 [Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)
 

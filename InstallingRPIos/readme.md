@@ -4,7 +4,7 @@ Peripherals:
 3. plug in USB-C to power on
 
 4. Network installation:
-   - hold 'shift' and wait for network installation to initiate
+   - hold `shift` and wait for network installation to initiate
    - select 'is' for keyboard layout and english for language
 
 5. Configurations:
@@ -14,7 +14,7 @@ Peripherals:
    - password
    - set locale (keyb:is lang:eng)
    - uncheck "Eject"
-   - 'Write' (installs and reboots)
+   - `Write` (installs and reboots)
 
 6. First bootup:
    - login using username and password set during install configuration
@@ -40,11 +40,8 @@ Peripherals:
      - (6) Advanced Options
        - (A1) Expand Filesystem
        - (A5) Update Bootloader
-     - 'Esc' -> 'Finish' & reboot
+     - `Esc` -> `<Finish>` & reboot
   8. System configuration complete
      ```
      sudo shutdown now
      ```
-  9. Software Installation:
-      - "ssh"
-      - 

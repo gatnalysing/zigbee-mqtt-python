@@ -44,9 +44,12 @@
       ```
       sudo systemctl restart wg-quick@wg0
       ```
+   - Ping a VPN peer to test
+     ```
+     ping 10.0.0.1
+     ```
 
 [Back to top](#raspberry-pi-recipe---zigbee2mqtt-flavour)
-
 
 ## Mosquitto MQTT Broker
 

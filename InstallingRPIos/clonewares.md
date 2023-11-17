@@ -54,13 +54,21 @@ For my purposes, I will need to remember to make the following changes after clo
 1. Run `sudo raspi-config` and:
    - expand partition to use entire drive
    - chanage the hostname from generic one
+
+2. Add node to wirguard server config file
    
-3. create my wireguard configuration file
+3. Enable the wireguard installation:
    ```
    sudo nano /etc/wireguard/wg0.conf
    ```
+   ```
+   sudo systemctl enable wg-quick@wg0
+   ```
+   ```
+   sudo systemctl restart wg-quick@wg0
+   ``` 
 4. run `npm start` for the first time
-   - with ConBeeII USB plugged in
+   _*with ConBeeII USB plugged in_
 5. close it:
    `ctrl`+`C`
 6. enable zigbee2mqtt as a service:

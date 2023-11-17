@@ -67,19 +67,22 @@ For my purposes, I will need to remember to make the following changes after clo
    ```
    sudo systemctl restart wg-quick@wg0
    ``` 
-4. run `npm start` for the first time
+4. Run `npm start` for the first time*
+  
+
    _*with ConBeeII USB plugged in_
-5. close it:
+
+6. Close it:
    `ctrl`+`C`
-6. enable zigbee2mqtt as a service:
+7. Enable zigbee2mqtt as a service:
    ```
    sudo systemctl enable zigbee2mqtt
    ```
-7. start the service:
+8. Start the service:
    ```
    sudo systemctl start zigbee2mqtt
    ```
-8. Check the status of the service:
+9. Check the status of the service:
    ```
    systemctl status zigbee2mqtt.service
    ```

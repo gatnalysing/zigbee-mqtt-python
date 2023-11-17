@@ -44,3 +44,30 @@ Based on the space used on generic Raspberry Pi lite installation on SSD (2.6 GB
    ```
 
 This approach will create an efficient image of your Raspberry Pi's SSD, suitable for cloning onto other devices.
+
+For my purposes, I will need to remember to make the following changes after cloning a node:
+
+1. Run `sudo raspi-config` and:
+   - expand partition to use entire drive
+   - chanage the hostname from generic one
+   
+3. create my wireguard configuration file
+   ```
+   sudo nano /etc/wireguard/wg0.conf
+   ```
+4. run `npm start` for the first time
+   - with ConBeeII USB plugged in
+5. close it:
+   `ctrl`+`C`
+6. enable zigbee2mqtt as a service:
+   ```
+   sudo systemctl enable zigbee2mqtt
+   ```
+7. start the service:
+   ```
+   sudo systemctl start zigbee2mqtt
+   ```
+8. Check the status of the service:
+   ```
+   systemctl status zigbee2mqtt.service
+   ```

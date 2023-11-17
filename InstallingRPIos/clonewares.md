@@ -69,6 +69,7 @@ For my purposes, I will need to remember to make the following changes after clo
    ``` 
 4. Run `zigbee2mqtt` for the first time*
    ```
+   cd /opt/zigbee2mqtt
    npm start
    ```
    _*with ConBeeII USB plugged in_

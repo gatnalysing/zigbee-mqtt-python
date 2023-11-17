@@ -67,9 +67,10 @@ For my purposes, I will need to remember to make the following changes after clo
    ```
    sudo systemctl restart wg-quick@wg0
    ``` 
-4. Run `npm start` for the first time*
-  
-
+4. Run `zigbee2mqtt` for the first time*
+   ```
+   npm start
+   ```
    _*with ConBeeII USB plugged in_
 
 6. Close it:

@@ -47,5 +47,3 @@ In order to address the issue of Zigbee2MQTT repopulating deleted devices:
 6. **Further Steps If Issue Persists**:
    - If the problem continues, it might be due to how Zigbee2MQTT interfaces with your Zigbee coordinator. In some cases, the coordinator might retain device information even after clearing Zigbee2MQTT's cache.
    - Updating Zigbee2MQTT to the latest version or resetting your Zigbee coordinator hardware might be necessary.
-
-This process should ideally prevent Zigbee2MQTT from auto-populating the devices list. If it doesn't work, it might be a more complex issue specific to your setup, requiring further investigation. In such cases, reaching out to Zigbee2MQTT's support forums or community can be helpful for more tailored advice.

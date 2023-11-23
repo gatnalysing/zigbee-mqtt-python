@@ -1,3 +1,5 @@
+
+```
 sudo systemctl disable zigbee2mqtt
 sudo systemctl stop zigbee2mqtt
 sudo gpasswd -a $USER dialout
@@ -13,3 +15,4 @@ sudo systemctl enable deconz
 sudo systemctl disable deconz-gui
 sudo systemctl stop deconz-gui
 sudo systemctl start deconz
+```

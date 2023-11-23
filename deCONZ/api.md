@@ -1,4 +1,7 @@
-
+Certificate token:
+```
+curl -X POST -H "Content-Type: application/json" -d '{"devicetype":"my_application"}' http://10.0.0.100:80/api
+```
 
 1. **Green**:
    ```bash

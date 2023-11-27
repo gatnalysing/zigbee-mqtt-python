@@ -1,7 +1,31 @@
-Certificate token:
+Aqcuire certificate token:
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"devicetype":"my_application"}' http://10.0.0.100:80/api
 ```
+
+Status of all lamps:
+```
+curl http://10.0.0.100:80/api/token/lights
+```
+
+Toggle a Light:
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"on":true}' http://10.0.0.109:80/api/8D1C82F2C7/lights/[LIGHT_ID]/state
+```
+
+Change Light Brightness (0-254):
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"bri":200}' http://10.0.0.100:80/api/token/lights/[LIGHT_ID]/state
+```
+
+Rename a Light:
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"New Light Name"}' http://10.0.0.100:80/api/token/lights/[LIGHT_ID]
+```
+
+--------------------------------------------------------------------------------
+
+Colour change:
 
 1. **Green**:
    ```bash

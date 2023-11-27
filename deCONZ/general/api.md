@@ -10,7 +10,7 @@ curl http://10.0.0.100:80/api/token/lights
 
 Toggle a Light:
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"on":true}' http://10.0.0.109:80/api/8D1C82F2C7/lights/[LIGHT_ID]/state
+curl -X PUT -H "Content-Type: application/json" -d '{"on":true}' http://10.0.0.109:80/api/token/lights/[LIGHT_ID]/state
 ```
 
 Change Light Brightness (0-254):

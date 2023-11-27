@@ -3,13 +3,13 @@
 Individual lamp:
 
 	
-	python3 deCONZcolour.py zg1 1 RED 210 2
+	python3 deCONZcolour.py zg01 1 RED 210 2
 	
  
 Multiple lamps:
 
 	
-	python3 deCONZserialRGB.py zg1 RED 210 10 2
+	python3 deCONZserialRGB.py zg01 RED 210 10 2
 	
  
 Log Status Update Individual Lamp:
@@ -114,7 +114,7 @@ Lamps:
    - Create a `zgindex.csv` file like the one above
    - Generate the colour index file `colours.txt` of the colours intended to be used
    - Run:
-     - `ziggypop.py`    creates --> device zg lists `zgXXX.txt`
+     - `ziggypop.py`    creates --> device zg lists `zgXX.txt`
      - `ziggystates.py` creates --> status zg lists `zg06state.txt`
    - python API scripts are now ready to be run
      - `deCONZserialRGB.py` attempts to change colour of all RGB capable lamps on gateway, one-by-one.
@@ -123,7 +123,7 @@ Lamps:
        python3 deCONZserialRGB.py [identifier] [colour] [brightn.] [fade(sec.)] [iteration(sec.)]
        ```
        ```
-       python3 deCONZserialRGB.py zg1 RED 210 10 2
+       python3 deCONZserialRGB.py zg01 RED 210 10 2
        ```
 
      - `deCONZserialRGB.py` changes the colour of a single lamp on a gateway.
@@ -133,5 +133,5 @@ Lamps:
        python3 deCONZcolour.py [identifier] [lamp_nr] [colour] [brightn.] [fade(sec.)]
        ```
        ```
-       python3 deCONZcolour.py zg1 1 RED 210 2
+       python3 deCONZcolour.py zg01 1 RED 210 2
        ```

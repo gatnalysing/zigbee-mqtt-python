@@ -17,6 +17,11 @@ Log Status Update Individual Lamp:
 	
 	python3 log.py zg01 1 status
 	
+
+Don't forget:
+
+  - APIbuilder.py
+  - ???
  
 -----------------------------------------------------------------
 

@@ -1,3 +1,25 @@
+### TLDR:
+
+Individual lamp:
+
+	
+	python3 deCONZcolour.py zg1 1 RED 210 2
+	
+ 
+Multiple lamps:
+
+	
+	python3 deCONZserialRGB.py zg1 RED 210 10 2
+	
+ 
+Log Status Update Individual Lamp:
+
+	
+	python3 log.py zg01 1 status
+	
+ 
+-----------------------------------------------------------------
+
 ### `zgindex.csv` Configuration File (User Generated File)
 - **Purpose**: Stores configuration data for each Deconz gateway.
 

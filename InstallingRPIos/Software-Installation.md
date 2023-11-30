@@ -7,35 +7,38 @@
 
 ## [WireGuard VPN](https://wireguard.how/client/raspberry-pi-os/ "wireguard.how...")
 (https://wireguard.how/client/raspberry-pi-os/)
-### Installation
 
-   - Install WireGuard:
-
-      ```
-      sudo apt install wireguard
-      ```
 ### Server Configuration
 
-   - Edit the WireGuard server configuration
-
+   - Server configuration needs to account for client:
       ```
       sudo nano /etc/wireguard/wg0.conf
       ```
 
    - Add the new client to your list of peers in the `wg0.conf` server file
    - Apply the new configuration
-     
-### Client Configuration
+     ```
+     sudo wg-quick down wg0 && sudo wg-quick up wg0
+     ```
+
+### Client Installation & Configuration
+
+   - Install WireGuard:
+
+      ```
+      sudo apt install wireguard
+      ```
+   - Install `resolvconf`:
+      ```
+      sudo apt-get install resolvconf
+      ```
 
    - Edit the WireGuard client configuration:
 
       ```
       sudo nano /etc/wireguard/wg0.conf
       ```
-   - Install `resolvconf`:
-      ```
-      sudo apt-get install resolvconf
-      ```
+
    - Set WireGuard to start on boot:
       ```
       sudo systemctl enable wg-quick@wg0

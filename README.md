@@ -2,19 +2,28 @@
 
 ![Street Lights](https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/streetlights.png)
 
-This project is Reykjavík's step towards integrating smart technology into our urban fabric. We're starting with ZigBee-enabled street lamps, aiming to explore and learn from this pilot for broader smart city initiatives.
+
+This project marks Reykjavík's step towards smart city integration, beginning with ZigBee-enabled street lamps. It's a foundational step for broader smart initiatives.
 
 ## The Plan
+
+We use Flask for ZigBee gateway APIs and Django for our management interface. The project features a real-time interactive map at reykjavik.gatnalysing.is, created with Leaflet and JavaScript, for monitoring and controlling the lamps.
+
 ![map in browser](https://github.com/gatnalysing/zigbee-mqtt-python/blob/main/pictures/browsermap.png)
 
-We're using Flask to create APIs for ZigBee gateway communication and Django for our management interface. The project also features an interactive map at reykjavik.gatnalysing.is, built with Leaflet and JavaScript for real-time monitoring and control.
+We aim to transition from deCONZ to Zigbee2mqtt, supporting open-source and community-driven development. We're also exploring Python tools like Prometheus and mqtt2prometheus for better logging and monitoring.
 
-Our next major goal is transitioning from deconz to Zigbee2mqtt. This shift is part of our commitment to open-source solutions and community-driven development. Alongside, we're considering Python-based tools like Prometheus for efficient logging and monitoring.
+While ZigBee may not be the city-wide choice for street light control, it offers insights for Reykjavík's smart-city goals. The project opens possibilities for environmental and traffic sensors, location services, and more.
 
 ![aurora](https://github.com/gatnalysing/zigbee-mqtt-python/blob/main/pictures/aurora.png)
 
-While ZigBee won't be city-wide, the insights we gain here are crucial. They'll guide us in scaling up smart technology solutions in Reykjavík, balancing innovation with practicality.
+Another goal is to integrate [Reykjavík Energy](https://or.is)'s DSMR energy monitoring hardware into our platform. As they are set to offer such services next year, real-time energy data will aid in diagnosing malfunctions earlier. We also plan to make some of this data public on the city's official online map, which could be informative for residents.
 
 ## Stay Tuned
 
-Right now, we're deep into hardware setup and learning the ropes. Our focus is on getting the groundwork right, so our community engagement is still gearing up. Keep tracking our progress here, and as we get more adept with Git, we'll open up better channels for collaboration and input.
+We're setting up hardware and learning. Our focus is on foundational work. Community engagement will expand as we progress. Follow our updates here. We'll enhance collaboration and input channels as we become more proficient with Git.
+
+Regards,
+The City Lights Team of Reykjavik
+
+![team](https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/Ateam.png)

@@ -27,7 +27,7 @@
   ```bash
   sudo systemctl stop zigbee2mqtt
   sudo systemctl disable zigbee2mqtt
-  sudo mv /opt/zigbee2mqtt /opt/zigbee2mqtt_backup  # or sudo rm -rf /opt/zigbee2mqtt
+  sudo rm -rf /opt/zigbee2mqtt
   ```
 
 ## 3. Install Mosquitto MQTT Broker

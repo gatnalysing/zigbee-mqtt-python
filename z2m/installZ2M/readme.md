@@ -69,6 +69,7 @@
   git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
   cd /opt/zigbee2mqtt
   npm ci
+  sudo npm install -g npm@10.2.5
   npm run build
   npm start
   Ctrl+C

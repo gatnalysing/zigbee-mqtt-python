@@ -8,8 +8,9 @@
 5. [Prepare Directory and Download Zigbee2MQTT](#5-prepare-directory-and-download-zigbee2mqtt)
 6. [Install and Build Zigbee2MQTT](#6-install-and-build-zigbee2mqtt)
 7. [Start Zigbee2MQTT for First Time](#7-start-zigbee2mqtt-for-first-time)
-8. [Configure Z2M as a Service](#8-configure-z2m-as-a-service)
-9. [Final Check](#9-final-check)
+8. [Make Changes to Z2M's Configuration.yaml](#8-make-changes-to-z2ms-configurationyaml)
+9. [Configure Z2M as a Service](#9-configure-z2m-as-a-service)
+10. [Final Check](#10-final-check)
 
 ## 1. Prepare Your System
 - Update and upgrade your system:
@@ -93,11 +94,30 @@
   ```
 - Press `Ctrl`+`C` to stop the process.
 
-## 8. Configure Z2M as a Service
+## 8. Make changes to z2m's configuration.yaml
+  ```
+  nano /opt/zigbee2mqtt/data/configuration.yaml
+  ```
+  ~~~
+  #gateway identifier:
+  #zg107
+  homeassistant: false
+  permit_join: false
+  mqtt:
+    base_topic: zigbee2mqtt
+    server: 'mqtt://localhost'
+  #enable webUI:
+  frontend:
+    port: 8080
+  serial:
+    port: /dev/ttyACM0
+  ~~~
+
+## 9. Configure Z2M as a Service
   ```bash
   sudo nano /etc/systemd/system/zigbee2mqtt.service
   ```
-  Add the service file content, replacing `User=user` with your username, like so:
+- Remember to add your username
   ```
   [Unit]
   Description=Zigbee2MQTT
@@ -114,13 +134,13 @@
   [Install]
   WantedBy=multi-user.target
   ```
-  Enable and start the service:
+- Enable and start the service:
   ```bash
   sudo systemctl enable zigbee2mqtt
   sudo systemctl start zigbee2mqtt
   ```
 
-## 9. Final Check
+## 10. Final Check
 - Verify everything is working:
   ```
   systemctl status zigbee2mqtt

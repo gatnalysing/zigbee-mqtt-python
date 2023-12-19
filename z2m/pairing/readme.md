@@ -1,6 +1,11 @@
 ## Pairing Lamps to Zigbee2MQTT Gateway
 
-1. Set Zigbee2MQTT gateway to pairing mode:
+1. Keep a monitoring window open during this process:
+   ```
+   sudo journalctl -u zigbee2mqtt.service -f
+   ```
+
+2. Set Zigbee2MQTT gateway to pairing mode:
    ```
    mosquitto_pub -h 10.0.0.X -t 'zigbee2mqtt/bridge/request/permit_join' -m '{"value": true, "time": 3600}'
    ```

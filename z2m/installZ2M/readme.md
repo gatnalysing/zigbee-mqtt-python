@@ -80,7 +80,7 @@
   ```bash
   cd /opt/zigbee2mqtt
   npm ci 
-  sudo npm install -g npm@10.2.5 # if update is available, change to applicable version
+  sudo npm install
   npm run build
   ```
 

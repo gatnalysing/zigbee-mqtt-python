@@ -2,16 +2,21 @@
 
 ## Table of Contents
 1. [Prepare Your System](#1-prepare-your-system)
-2. [Remove Conflicting Services](#2-remove-conflicting-services-deconz-and-previous-z2m)
+2. [Remove Conflicting Services (deCONZ and Previous Z2M)](#2-remove-conflicting-services-deconz-and-previous-z2m)
 3. [Install Mosquitto MQTT Broker](#3-install-mosquitto-mqtt-broker)
 4. [Install Zigbee2MQTT](#4-install-zigbee2mqtt)
-5. [Final Check](#5-final-check)
+5. [Prepare Directory and Download Zigbee2MQTT](#5-prepare-directory-and-download-zigbee2mqtt)
+6. [Install and Build Zigbee2MQTT](#6-install-and-build-zigbee2mqtt)
+7. [Start Zigbee2MQTT for First Time](#7-start-zigbee2mqtt-for-first-time)
+8. [Configure Z2M as a Service](#8-configure-z2m-as-a-service)
+9. [Final Check](#9-final-check)
 
 ## 1. Prepare Your System
 - Update and upgrade your system:
   ```bash
   sudo apt update
   sudo apt upgrade -y
+  ```
 
 ## 2. Remove Conflicting Services (deCONZ and Previous Z2M)
 - If you have deCONZ installed:
@@ -62,36 +67,65 @@
   sudo apt-get update
   sudo apt-get install -y nodejs git
   ```
-- Set up Zigbee2MQTT:
+
+## 5. Prepare Directory and Download Zigbee2MQTT
   ```bash
   sudo mkdir /opt/zigbee2mqtt
   sudo chown -R $USER: /opt/zigbee2mqtt
   git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
+  ```
+  
+## 6. Install and Build Zigbee2MQTT
+  ```bash
   cd /opt/zigbee2mqtt
-  npm ci
-  sudo npm install -g npm@10.2.5
+  npm ci 
+  sudo npm install -g npm@10.2.5 # if update is available, change to applicable version
   npm run build
+  ```
+
+## 7. Start Zigbee2MQTT for First Time
+  ```bash
   npm start
   ```
-- Start Zigbee2MQTT for the first time and wait for success message:
-  
-  'Zigbee2MQTT started!'
-  'Ctrl+C'
-  
-- Configure Z2M as a service:
+- Let it set up configurations and wait for the success message:
+  ```bash
+  Zigbee2MQTT:info  2023-12-19 11:21:37: Zigbee2MQTT started!
+  ```
+- Press `Ctrl`+`C` to stop the process.
+
+## 8. Configure Z2M as a Service
   ```bash
   sudo nano /etc/systemd/system/zigbee2mqtt.service
   ```
-  Add the service file content, replacing `User=user` with your username.
+  Add the service file content, replacing `User=user` with your username, like so:
+  ```
+  [Unit]
+  Description=Zigbee2MQTT
+  After=network.target
+  
+  [Service]
+  ExecStart=/usr/bin/npm start
+  WorkingDirectory=/opt/zigbee2mqtt
+  StandardOutput=inherit
+  StandardError=inherit
+  Restart=always
+  User=your-username-here
+  
+  [Install]
+  WantedBy=multi-user.target
+  ```
   Enable and start the service:
   ```bash
   sudo systemctl enable zigbee2mqtt
   sudo systemctl start zigbee2mqtt
   ```
 
-## 5. Final Check
+## 9. Final Check
 - Verify everything is working:
-  ```bash
+  ```
   systemctl status zigbee2mqtt
+  ```
+  and/or
+  ```
   sudo journalctl -u zigbee2mqtt.service -f
   ```

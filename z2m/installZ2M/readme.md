@@ -72,8 +72,12 @@
   sudo npm install -g npm@10.2.5
   npm run build
   npm start
-  Ctrl+C
   ```
+- Start Zigbee2MQTT for the first time and wait for success message:
+  
+  'Zigbee2MQTT started!'
+  'Ctrl+C'
+  
 - Configure Z2M as a service:
   ```bash
   sudo nano /etc/systemd/system/zigbee2mqtt.service

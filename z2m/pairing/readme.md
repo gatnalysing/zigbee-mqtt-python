@@ -16,8 +16,9 @@
    serial:
      port: /dev/ttyACM0
    ```
-   
-   
+   ```
+   sudo reboot
+   ```
 2. Reset lamps to their factory settings and enable pairing:
     
    - In 5 second intervals turn lamps off and on until they start flashing
@@ -39,7 +40,7 @@
    ```
    ```
    homeassistant: false
-   permit_join: true
+   permit_join: false
    mqtt:
      base_topic: zigbee2mqtt
      server: 'mqtt://localhost'
@@ -47,4 +48,7 @@
      port: 8080
    serial:
      port: /dev/ttyACM0
+   ```
+   ```
+   sudo reboot
    ```

@@ -1,16 +1,24 @@
 ## Pairing Lamps to Zigbee2MQTT Gateway
 
-1. Keep a monitoring window open during this process:
-   ```
-   sudo journalctl -u zigbee2mqtt.service -f
-   ```
 
-2. Set Zigbee2MQTT gateway to pairing mode:
+1. Set Zigbee2MQTT gateway to pairing mode:
    ```
-   mosquitto_pub -h 10.0.0.X -t 'zigbee2mqtt/bridge/request/permit_join' -m '{"value": true, "time": 3600}'
+   nano /opt/zigbee2mqtt/data/configuration.yaml
+   ```
+   ```
+   homeassistant: false
+   permit_join: true
+   mqtt:
+     base_topic: zigbee2mqtt
+     server: 'mqtt://localhost'
+   frontend:
+     port: 8080
+   serial:
+     port: /dev/ttyACM0
    ```
    
-3. Reset lamps to their factory settings and enable pairing:
+   
+2. Reset lamps to their factory settings and enable pairing:
     
    - In 5 second intervals turn lamps off and on until they start flashing
    - Let the lamps flash about 10 times for about 10 seconds
@@ -20,12 +28,23 @@
      ![Factory Reset of Zigbee Lamp](https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/factoryresetlamp.jpeg)
 
 
-4. Once in pairing mode lamps will hopefully join your zigbee network:
+3. Once in pairing mode lamps will hopefully join your zigbee network:
    - Check  [`webUI`](http://10.0.0.X:8080/) or configuration file for joined devices
+   ```
+   cat /opt/zigbee2mqtt/data/configuration.yaml
+   ```
+4. Once done cancel pairing on gateway:
    ```
    nano /opt/zigbee2mqtt/data/configuration.yaml
    ```
-5. Once done cancel pairing on gateway:
    ```
-   mosquitto_pub -h 10.0.0.X -t 'zigbee2mqtt/bridge/request/permit_join' -m '{"value": false}'
+   homeassistant: false
+   permit_join: true
+   mqtt:
+     base_topic: zigbee2mqtt
+     server: 'mqtt://localhost'
+   frontend:
+     port: 8080
+   serial:
+     port: /dev/ttyACM0
    ```

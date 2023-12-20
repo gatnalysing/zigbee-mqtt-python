@@ -99,8 +99,6 @@
   nano /opt/zigbee2mqtt/data/configuration.yaml
   ```
   ~~~
-  #gateway identifier:
-  #zg107
   homeassistant: false
   permit_join: false
   mqtt:

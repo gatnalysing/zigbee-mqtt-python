@@ -79,8 +79,8 @@
 ## 6. Install and Build Zigbee2MQTT
   ```bash
   cd /opt/zigbee2mqtt
-  npm ci 
-  sudo npm install
+  npm ci
+  sudo npm install -g npm@10.2.5
   npm run build
   ```
 

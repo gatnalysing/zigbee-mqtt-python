@@ -27,3 +27,4 @@ Regards,
 The City Lights Team of Reykjavik
 
 ![team](https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/Ateam.png)
+<img src="https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/leo.jpeg" style="width: 50%;">

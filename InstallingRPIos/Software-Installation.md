@@ -170,6 +170,20 @@ npm start
 ```
 After "`Zigbee2MQTT started!`" message, exit gracefully with `Ctrl`+`C` ("`Stopped Zigbee2MQTT`")
 
+edit conf:
+
+```
+nano /opt/zigbee2mqtt/data/configuration.yaml
+```
+
+and add:
+
+```
+frontend:
+  port: 8080 # Port for the web interface
+  host: 0.0.0.0 # Optional, default is 0.0.0.0 which allows access from any IP address.
+```
+
 ### Running as a Daemon with systemctl
 
 Create a new service file for Zigbee2MQTT:

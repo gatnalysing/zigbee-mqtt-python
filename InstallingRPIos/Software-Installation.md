@@ -224,5 +224,14 @@ Check the status of the service:
 ```
 systemctl status zigbee2mqtt.service
 ```
+other good commands to know:
+
+```
+journalctl -u zigbee2mqtt.service -f
+```
+
+```
+sudo systemctl restart zigbee2mqtt
+```
 
 [Back to top](#zigbee-gateway---initial-software-installation)

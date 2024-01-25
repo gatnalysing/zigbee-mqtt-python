@@ -25,6 +25,3 @@ We're setting up hardware and learning. Our focus is on foundational work. Commu
 
 Regards,
 The City Lights Team of Reykjavik
-
-![team](https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/Ateam.png)
-<img src="https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/leo.jpeg" style="width: 50%;">

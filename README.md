@@ -13,7 +13,7 @@
 - [x] device_manager.py
 - [x] RGB.py
 
-... more --> [github.com/davidjrb/zgmanager](https://github.com/gatnalysing/zgmanager) 
+... more --> [github.com/gatnalysing/zgmanager](https://github.com/gatnalysing/zgmanager) 
 
 ---
 

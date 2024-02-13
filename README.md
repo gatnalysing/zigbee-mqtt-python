@@ -1,5 +1,22 @@
 # Reykjavík Street Lamp Project
 
+---
+
+13.02.2024 - Progress update:
+
+Done:
+
+ mqtt_pub.py
+ mqtt_sub.py
+ parse_dev.py
+ parse_gw.py
+ query_device.py
+ device_manager.py
+ RGB.py
+... more --> github.com/gatnalysing/zgmanager
+
+---
+
 ![Street Lights](https://raw.githubusercontent.com/gatnalysing/zigbee-mqtt-python/main/pictures/streetlights.png)
 
 

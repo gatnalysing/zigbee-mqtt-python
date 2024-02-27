@@ -15,6 +15,11 @@ sudo apt upgrade -y
 sudo reboot -y
 ```
 
+```
+sudo apt install fish -y
+fish
+```
+
 ## Mosquitto MQTT Broker
 
 ### Installation

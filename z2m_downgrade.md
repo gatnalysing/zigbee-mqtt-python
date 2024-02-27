@@ -8,7 +8,7 @@ I also noticed a faulty installation of mqtt on a couple of the nodes, so adding
 First things first:
 ```
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade -y
 ```
 
 ## Mosquitto MQTT Broker

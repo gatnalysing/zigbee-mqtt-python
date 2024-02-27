@@ -138,13 +138,7 @@ WantedBy=multi-user.target
 Enable and start the Zigbee2MQTT service:
 ```
 sudo systemctl enable zigbee2mqtt
-```
-```
 sudo systemctl start zigbee2mqtt
-```
-
-Check the status of the service:
-```
 systemctl status zigbee2mqtt.service
 ```
 other good commands to know:

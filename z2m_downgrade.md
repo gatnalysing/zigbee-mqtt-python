@@ -11,6 +11,10 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
+```
+sudo reboot -y
+```
+
 ## Mosquitto MQTT Broker
 
 ### Installation

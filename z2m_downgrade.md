@@ -20,6 +20,10 @@ sudo apt install fish -y
 fish
 ```
 
+~~~bash
+chsh -s /usr/bin/fish
+~~~
+
 ## Mosquitto MQTT Broker
 
 ### Installation

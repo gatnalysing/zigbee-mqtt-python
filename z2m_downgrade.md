@@ -4,6 +4,13 @@ Things have been rough for deconz as well during this time. Not sure what's happ
 
 I also noticed a faulty installation of mqtt on a couple of the nodes, so adding that here: 
 
+
+First things first:
+```
+sudo apt update
+sudo apt upgrade
+```
+
 ## Mosquitto MQTT Broker
 
 ### Installation

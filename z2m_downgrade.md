@@ -12,7 +12,7 @@ sudo apt upgrade -y
 ```
 
 ```
-sudo reboot -y
+sudo reboot
 ```
 
 ```

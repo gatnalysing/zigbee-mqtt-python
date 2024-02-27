@@ -76,7 +76,7 @@ sudo mv /opt/zigbee2mqtt /opt/zigbee2mqtt_backup
 sudo rm -rf /opt/zigbee2mqtt
 sudo mkdir /opt/zigbee2mqtt
 sudo chown -R $USER: /opt/zigbee2mqtt
-sudo tar -zxvf 1.33.0.tar.gz -C /opt/zigbee2mqtt --strip-components=1
+tar -zxvf 1.33.0.tar.gz -C /opt/zigbee2mqtt --strip-components=1
 ~~~
 
 
@@ -103,7 +103,9 @@ edit conf:
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
 
-turn off pairing and add:
+TURN OFF PAIRING!!! (permit_join: false)
+
+and add:
 
 ```
 frontend:

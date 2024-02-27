@@ -2,7 +2,7 @@ There have been a lot of problems since upgrade from z2m version 1.33.0
 
 Things have been rough for deconz as well during this time. Not sure what's happenning.
 
-
+I also noticed a faulty installation of mqtt on a couple of the nodes, so adding that here: 
 
 ## Mosquitto MQTT Broker
 

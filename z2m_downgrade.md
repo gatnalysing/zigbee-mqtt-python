@@ -103,7 +103,7 @@ edit conf:
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
 
-and add:
+turn off pairing and add:
 
 ```
 frontend:

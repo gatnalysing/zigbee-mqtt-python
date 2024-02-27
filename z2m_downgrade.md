@@ -38,13 +38,7 @@ sudo apt install -y mosquitto mosquitto-clients
 - Enable and start the Mosquitto service:
 ```
 sudo systemctl enable mosquitto
-```
-```
 sudo systemctl start mosquitto
-```
-
-- Configuration file:
-```
 sudo nano /etc/mosquitto/mosquitto.conf
 ```
 
